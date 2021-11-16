@@ -12,11 +12,15 @@ class SetTests {
 Integer[] initialNumbers = {
 	10, 20, 40, 60	
 };
+String[] initialStrings = {"Ilya", "Katya", "Andrey"};
 Set<Integer> set;
+Set<String>  setString;
 	@BeforeEach
 	void setUp() throws Exception {
 		set = new TreeSet<>();
 		fillSet();
+		setString = new TreeSet<>((a,b) -> a.compareToIgnoreCase(b));
+		fillSetStrings();
 	}
 
 	private void fillSet() {
@@ -25,7 +29,11 @@ Set<Integer> set;
 		}
 		
 	}
-
+	private void fillSetStrings() {
+		for(String str : initialStrings) {
+			setString.add(str);
+		}
+	}
 	@Test
 	void addTest() {
 		assertEquals(initialNumbers.length, set.size());
@@ -73,11 +81,13 @@ Set<Integer> set;
 		Arrays.sort(exp1);
 		assertArrayEquals(exp1, getArrayFromSet(set));
 		//
+		System.out.println("===================");
 		Integer exp2[] = { 100, 4, -18, 74, -34, 204 };
 		Set<Integer> tmpSet = createSetFromArray(exp2);
 		Arrays.sort(exp2);
 		assertArrayEquals(exp2, getArrayFromSet(tmpSet));
 		//
+		System.out.println("===================");
 		Integer exp3[] = { -18, -34, 74, 100, 204, 4 };
 		Set<Integer> tmpSet1 = createSetFromArray(exp3);
 		Arrays.sort(exp3);
